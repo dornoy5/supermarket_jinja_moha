@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+</head>
+<body style="background: #78FFD6; color: #023C40; font-family: 'Source Sans Pro', sans-serif;">
+
+    <div class="container d-flex flex-column justify-content-center align-items-center text-center" style="height: 100vh;">
+        <h1 style="color: #023C40; font-family: 'Trocchi', serif; font-size: 45px; font-weight: normal; line-height: 48px; margin: 0;">Supermarket</h1>
+        <br>
+        <a href="/about" class="btn btn-primary">About Us</a>
+        <br>
+        <a href="/cart" class="btn btn-primary">View Cart</a>
+        <br>
+        <ul>
+            {% for product in product_list %}
+                <li>
+                    {{ product.prod_name }} - Price: ${{ product.prod_price }} - Quantity: {{ product.quantity }}
+                    <form method="POST" action="/cart">
+                        <input type="hidden" name="product_name" value="{{ product.prod_name }}">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="addToCart('{{ product.prod_name }}')">Add to Cart</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function addToCart(productName) {
+            alert("Added to cart!");
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/cart";
+
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "product_name";
+            input.value = productName;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</body>
+</html>

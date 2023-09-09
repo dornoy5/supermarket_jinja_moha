@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Cart</title>
+</head>
+<body style="background: #78FFD6; color: #023C40; font-family: 'Source Sans Pro', sans-serif;">
+
+    <div class="container d-flex flex-column justify-content-center align-items-center text-center" style="height: 100vh;">
+        <h1 style="color: #023C40; font-family: 'Trocchi', serif; font-size: 45px; font-weight: normal; line-height: 48px; margin: 0;text-align:">Cart</h1>
+        <br>
+        <a href="/" class="btn btn-primary">Homepage</a>
+        <br>
+        <a href="/about" class="btn btn-primary">About Us</a>
+        <br>
+        <form method="POST" action="/buy">
+            <!-- Loop through the items in the cart and include input fields -->
+            {% for item in cart %}
+                <input type="hidden" name="product_name[]" value="{{ item.prod_name }}">
+                <li>{{ item.prod_name }} - Price: ${{ item.prod_price }}</li>
+            {% endfor %}
+            <br>
+            <p>Total number of items: {{ total_items }}</p>
+            <p>Total cost: ${{ total_cost }}</p>
+            <!-- Use a POST request for the Buy button -->
+            <button type="submit" class="btn btn-primary">Buy</button>
+        </form>
+    </div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function buyItems() {
+            // Display the alert
+            alert("Thanks for buying!");
+
+            // Clear the cart on the client side
+            var cartList = document.querySelector("ul");
+            cartList.innerHTML = "";
+
+            // Update the total number of items and total cost
+            var totalItems = document.querySelector("#total-items");
+            var totalCost = document.querySelector("#total-cost");
+            totalItems.textContent = "Total number of items: 0";
+            totalCost.textContent = "Total cost: $0";
+        }
+    </script>
+</body>
+</html>
